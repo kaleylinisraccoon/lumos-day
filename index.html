@@ -5,22 +5,16 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#F8F6FC">
-
   <title>Lumos Day ♡</title>
 
-  <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&family=Zen+Maru+Gothic:wght@400;500;700;900&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
 
   <style>
-    /* ===== 基本設定 ===== */
-
     :root {
       --bg: #F8F6FC;
       --lavender: #EEE8F8;
-      --light-purple: #E4DCF2;
       --purple: #9882C5;
       --deep-purple: #78699E;
       --text: #766B89;
@@ -29,27 +23,132 @@
       --border: #EAE2F3;
     }
 
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     body {
       margin: 0;
       background: var(--bg);
       color: var(--text);
-      font-family:
-        "Nunito",
-        "Zen Maru Gothic",
-        "Noto Sans TC",
-        sans-serif;
+      font-family: "Nunito", "Zen Maru Gothic", "Noto Sans TC", sans-serif;
       -webkit-font-smoothing: antialiased;
     }
 
-    a {
-      -webkit-tap-highlight-color: transparent;
+    button, input { font: inherit; }
+
+    /* 登入畫面 */
+    #loginScreen {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
     }
 
-    /* ===== 頁首 ===== */
+    .login-card {
+      width: 100%;
+      max-width: 390px;
+      padding: 36px 27px;
+      text-align: center;
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 26px;
+      box-shadow: 0 12px 35px rgba(125,104,166,.08);
+    }
+
+    .login-logo {
+      color: var(--purple);
+      font-size: 34px;
+      font-weight: 900;
+    }
+
+    .login-subtitle {
+      margin: 5px 0 27px;
+      color: var(--muted);
+      font-size: 11px;
+      letter-spacing: 3px;
+    }
+
+    .login-card h2 {
+      color: var(--deep-purple);
+      font-size: 21px;
+      margin-bottom: 8px;
+    }
+
+    .login-hint {
+      color: var(--muted);
+      font-size: 13px;
+      margin-bottom: 24px;
+    }
+
+    .login-card input {
+      width: 100%;
+      padding: 14px 15px;
+      margin: 7px 0;
+      border: 1px solid var(--border);
+      border-radius: 13px;
+      background: #FBF9FD;
+      color: var(--text);
+      outline: none;
+    }
+
+    .login-card input:focus {
+      border-color: var(--purple);
+    }
+
+    .primary-btn {
+      width: 100%;
+      padding: 14px;
+      margin-top: 14px;
+      border: 0;
+      border-radius: 13px;
+      background: var(--purple);
+      color: white;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .primary-btn:disabled {
+      opacity: .6;
+      cursor: wait;
+    }
+
+    #loginMessage {
+      min-height: 22px;
+      margin-top: 14px;
+      color: #B56F87;
+      font-size: 12px;
+      overflow-wrap: anywhere;
+    }
+
+    .login-footer {
+      margin-top: 20px;
+      color: #BBAFD0;
+      font-size: 11px;
+    }
+
+    /* 登入後的首頁 */
+    #appScreen { display: none; }
+
+    .topbar {
+      max-width: 650px;
+      margin: 0 auto;
+      padding: 12px 18px 0;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 10px;
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    .logout-btn {
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 7px 13px;
+      background: var(--white);
+      color: var(--deep-purple);
+      cursor: pointer;
+    }
 
     header {
       text-align: center;
@@ -68,13 +167,10 @@
     header .subtitle {
       margin-top: 5px;
       color: var(--muted);
-      font-family: "Nunito", sans-serif;
       font-size: 11px;
       font-weight: 700;
       letter-spacing: 3px;
     }
-
-    /* ===== 主視覺區 ===== */
 
     .hero {
       max-width: 650px;
@@ -86,21 +182,12 @@
       align-items: center;
       justify-content: center;
       text-align: center;
-
-      background: linear-gradient(
-        135deg,
-        #EEE8F8,
-        #F6F1FA
-      );
-
+      background: linear-gradient(135deg, #EEE8F8, #F6F1FA);
       border: 1px solid #E7DDF2;
       border-radius: 27px;
     }
 
-    .hero .paw {
-      font-size: 19px;
-      margin-bottom: 12px;
-    }
+    .hero .paw { font-size: 19px; margin-bottom: 12px; }
 
     .hero h2 {
       margin: 0;
@@ -114,29 +201,22 @@
       margin-top: 12px;
       color: var(--muted);
       font-size: 13px;
-      font-weight: 500;
     }
-
-    /* ===== 交往天數 ===== */
 
     .anniversary {
       width: calc(100% - 36px);
       max-width: 420px;
       margin: 24px auto 32px;
       padding: 27px 20px 30px;
-
       text-align: center;
       background: var(--white);
       border: 1px solid var(--border);
       border-radius: 22px;
-
-      box-shadow:
-        0 10px 30px rgba(125, 104, 166, 0.07);
+      box-shadow: 0 10px 30px rgba(125,104,166,.07);
     }
 
     .anniversary .label {
       color: var(--muted);
-      font-family: "Nunito", sans-serif;
       font-size: 11px;
       font-weight: 800;
       letter-spacing: 3px;
@@ -145,33 +225,23 @@
     #days {
       margin: 17px 0 10px;
       color: var(--purple);
-      font-family: "Nunito", sans-serif;
       font-size: 45px;
       font-weight: 800;
       line-height: 1.2;
     }
 
-    .date {
-      color: var(--muted);
-      font-family: "Nunito", sans-serif;
-      font-size: 12px;
-      font-weight: 600;
-    }
+    .date { color: var(--muted); font-size: 12px; }
 
     .anniversary .love-message {
       margin: 12px 0 0;
       color: var(--muted);
       font-size: 12px;
-      font-weight: 500;
     }
-
-    /* ===== 功能選單 ===== */
 
     .menu {
       width: calc(100% - 30px);
       max-width: 620px;
       margin: 32px auto;
-
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       gap: 14px;
@@ -180,208 +250,285 @@
     .item {
       min-height: 145px;
       padding: 25px 10px;
-
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-
       text-align: center;
       text-decoration: none;
-
       background: var(--white);
       border: 1px solid var(--border);
       border-radius: 20px;
-
       color: var(--deep-purple);
-      transition: all 0.25s ease;
+      transition: all .25s ease;
     }
 
     .item:hover {
       background: var(--lavender);
       transform: translateY(-4px);
-      box-shadow: 0 8px 20px rgba(125, 104, 166, 0.09);
+      box-shadow: 0 8px 20px rgba(125,104,166,.09);
     }
 
-    .item:active {
-      transform: scale(0.97);
-    }
-
-    .item .emoji {
-      margin-bottom: 11px;
-      font-size: 27px;
-    }
-
-    .item strong {
-      font-family: "Nunito", sans-serif;
-      font-size: 14px;
-      font-weight: 900;
-    }
-
-    .item small {
-      margin-top: 6px;
-      color: var(--muted);
-      font-size: 11px;
-      font-weight: 500;
-    }
-
-    /* ===== 頁尾 ===== */
-
-    .message {
-      margin: 35px 15px;
-      text-align: center;
-      color: var(--muted);
-      font-family: "Nunito", sans-serif;
-      font-size: 14px;
-      font-weight: 600;
-    }
+    .item .emoji { margin-bottom: 11px; font-size: 27px; }
+    .item strong { font-size: 14px; font-weight: 900; }
+    .item small { margin-top: 6px; color: var(--muted); font-size: 11px; }
 
     footer {
       padding: 28px 10px 35px;
       text-align: center;
       color: #BBAFD0;
-      font-family: "Nunito", sans-serif;
       font-size: 11px;
-      font-weight: 600;
       letter-spacing: 1px;
     }
 
-    /* ===== 手機版 ===== */
-
     @media (max-width: 480px) {
-
-      header {
-        padding-top: 27px;
-      }
-
-      header h1 {
-        font-size: 33px;
-      }
-
-      .hero {
-        min-height: 185px;
-        margin: 20px 16px;
-        padding: 30px 15px;
-      }
-
-      .hero h2 {
-        font-size: 23px;
-      }
-
-      #days {
-        font-size: 39px;
-      }
-
-      .menu {
-        gap: 11px;
-      }
-
-      .item {
-        min-height: 132px;
-        padding: 20px 5px;
-      }
-
-      .item strong {
-        font-size: 13px;
-      }
+      header { padding-top: 27px; }
+      header h1 { font-size: 33px; }
+      .hero { min-height: 185px; margin: 20px 16px; padding: 30px 15px; }
+      .hero h2 { font-size: 23px; }
+      #days { font-size: 39px; }
+      .menu { gap: 11px; }
+      .item { min-height: 132px; padding: 20px 5px; }
+      .item strong { font-size: 13px; }
     }
   </style>
 </head>
 
 <body>
 
-  <!-- 頁首 -->
-  <header>
-    <h1>Lumos Day 🐕</h1>
-    <div class="subtitle">
-      Curly Dog &amp; Sleepy Cat
+  <!-- 登入畫面 -->
+  <section id="loginScreen">
+    <div class="login-card">
+      <div class="login-logo">Lumos Day ♡</div>
+      <div class="login-subtitle">CURLY DOG &amp; SLEEPY CAT</div>
+
+      <h2>Welcome to our little world</h2>
+      <div class="login-hint">請登入你們的專屬帳號 ♡</div>
+
+      <form id="loginForm">
+        <input
+          id="email"
+          type="email"
+          placeholder="Email"
+          autocomplete="username"
+          required
+        >
+
+        <input
+          id="password"
+          type="password"
+          placeholder="Password"
+          autocomplete="current-password"
+          required
+        >
+
+        <button class="primary-btn" id="loginButton" type="submit">
+          Login ♡
+        </button>
+      </form>
+
+      <div id="loginMessage" role="status"></div>
+      <div class="login-footer">Only for two of us ♡</div>
     </div>
-  </header>
+  </section>
 
-  <main>
+  <!-- 登入成功才會顯示的首頁 -->
+  <div id="appScreen">
 
-    <!-- 主視覺 -->
-    <section class="hero">
-      <div class="paw">🐾</div>
+    <div class="topbar">
+      <span id="userEmail"></span>
+      <button class="logout-btn" id="logoutButton">Logout ↗</button>
+    </div>
 
-      <h2>月が綺麗ですね。</h2>
+    <header>
+      <h1>Lumos Day 🐕＆🐈</h1>
+      <div class="subtitle">Curly Dog &amp; Sleepy Cat</div>
+    </header>
 
-      <p>一週年特輯</p>
-    </section>
+    <main>
+      <section class="hero">
+        <div class="paw">🐾</div>
+        <h2>月が綺麗ですね。</h2>
+        <p>一週年特輯</p>
+      </section>
 
-    <!-- 交往天數 -->
-    <section class="anniversary">
+      <section class="anniversary">
+        <div class="label">OUR LOVE DAYS</div>
+        <div id="days">𓃠</div>
+        <div class="date">Since December 21, 2025</div>
+        <p class="love-message">
+          一年啦！一年啦！明年就兩年啦！
+        </p>
+      </section>
 
-      <div class="label">
-        OUR LOVE DAYS
-      </div>
+      <section class="menu">
+        <a class="item" href="#memories">
+          <span class="emoji">📷</span>
+          <strong>Fur Memories</strong>
+          <small>毛毛相簿</small>
+        </a>
 
-      <div id="days">
-        𓃠
-      </div>
+        <a class="item" href="#letters">
+          <span class="emoji">💌</span>
+          <strong>Do you copy?</strong>
+          <small>留言區</small>
+        </a>
 
-      <div class="date">
-        Since December 21, 2025
-      </div>
+        <a class="item" href="#dates">
+          <span class="emoji">🗓️</span>
+          <strong>Where are we going?</strong>
+          <small>去哪裡?</small>
+        </a>
 
-      <p class="love-message">
-        一年啦！一年啦！明年就兩年啦！
-      </p>
+        <a class="item" href="#rewards">
+          <span class="emoji">🎟️</span>
+          <strong>Good Turns!</strong>
+          <small>好寶寶集點卡</small>
+        </a>
+      </section>
+    </main>
 
-    </section>
+    <footer>
+      Made with sleepy, coffee, and love U.
+      <p>© Lumos Day</p>
+    </footer>
+  </div>
 
-    <!-- 功能入口 -->
-    <section class="menu">
+  <!-- Supabase 登入功能 -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-      <a class="item" href="#memories">
-        <span class="emoji">📷</span>
-        <strong>Fur Memories</strong>
-        <small>毛毛相簿</small>
-      </a>
-
-      <a class="item" href="#letters">
-        <span class="emoji">💌</span>
-        <strong>Do you copy?</strong>
-        <small>留言區</small>
-      </a>
-
-      <a class="item" href="#dates">
-        <span class="emoji">🗓️</span>
-        <strong>Where are we going?</strong>
-        <small>去哪裡?</small>
-      </a>
-
-      <a class="item" href="#rewards">
-        <span class="emoji">🎟️</span>
-        <strong>Good Turns!</strong>
-        <small>好寶寶集點卡</small>
-      </a>
-
-    </section>
-
-    <!-- 小語 -->
-  </main>
-
-  <!-- 頁尾 -->
-  <footer>
-    Made with sleepy, coffee, and love U. 
-    <p>© Lumos Day</p>
-  </footer>
-
-  <!-- 交往天數計算 -->
   <script>
-    const startDate = new Date(2025, 11, 21);
-    const today = new Date();
+    const SUPABASE_URL = "https://lttnbiwyosxaciggphei.supabase.co";
+    const SUPABASE_KEY = "sb_publishable_kffwFu-4hfWa3_P0uD1law_crdsSZGb";
 
-    startDate.setHours(0, 0, 0, 0);
-    today.setHours(0, 0, 0, 0);
+    const supabase = window.supabase.createClient(
+      SUPABASE_URL,
+      SUPABASE_KEY
+    );
 
-    const days = Math.floor(
-      (today - startDate) / (1000 * 60 * 60 * 24)
-    ) + 1;
+    const loginScreen = document.getElementById("loginScreen");
+    const appScreen = document.getElementById("appScreen");
+    const loginForm = document.getElementById("loginForm");
+    const loginButton = document.getElementById("loginButton");
+    const loginMessage = document.getElementById("loginMessage");
 
-    document.getElementById("days").textContent =
-      days >= 1 ? days + " DAYS ♡" : "COMING SOON ♡";
+    function showLogin(message = "") {
+      loginScreen.style.display = "flex";
+      appScreen.style.display = "none";
+      loginMessage.textContent = message;
+    }
+
+    function showHome(email) {
+      loginScreen.style.display = "none";
+      appScreen.style.display = "block";
+      document.getElementById("userEmail").textContent = email || "";
+    }
+
+    // 確認登入者是否為共同空間成員
+    async function checkMember(user) {
+      const { data, error } = await supabase
+        .from("couple_members")
+        .select("couple_id, role")
+        .eq("user_id", user.id)
+        .maybeSingle();
+
+      if (error) {
+        console.error("Member check error:", error);
+        showLogin("無法確認成員資格，請稍後再試。");
+        return;
+      }
+
+      if (!data) {
+        showLogin("這個帳號尚未加入 Lumos Day 共同空間。");
+        return;
+      }
+
+      showHome(user.email);
+    }
+
+    // 計算交往天數
+    function updateLoveDays() {
+      const startDate = new Date(2025, 11, 21);
+      const today = new Date();
+
+      startDate.setHours(0, 0, 0, 0);
+      today.setHours(0, 0, 0, 0);
+
+      const days = Math.floor(
+        (today - startDate) / (1000 * 60 * 60 * 24)
+      ) + 1;
+
+      document.getElementById("days").textContent =
+        days >= 1 ? days + " DAYS ♡" : "COMING SOON ♡";
+    }
+
+    // Email + 密碼登入
+    loginForm.addEventListener("submit", async (event) => {
+      event.preventDefault();
+
+      loginButton.disabled = true;
+      loginButton.textContent = "Logging in...";
+      loginMessage.textContent = "";
+
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value;
+
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email,
+        password
+      });
+
+      loginButton.disabled = false;
+      loginButton.textContent = "Login ♡";
+
+      if (error) {
+        loginMessage.textContent = "登入失敗：" + error.message;
+        return;
+      }
+
+      await checkMember(data.user);
+    });
+
+    // 登出
+    document.getElementById("logoutButton").addEventListener("click", async () => {
+      const { error } = await supabase.auth.signOut();
+
+      if (error) {
+        alert("登出失敗，請再試一次。");
+        return;
+      }
+
+      showLogin();
+    });
+
+    // 網頁載入時檢查是否已有登入狀態
+    async function initialize() {
+      showLogin();
+
+      const { data, error } = await supabase.auth.getSession();
+
+      if (error) {
+        showLogin("讀取登入狀態失敗，請重新整理。");
+        return;
+      }
+
+      if (data.session) {
+        await checkMember(data.session.user);
+      }
+
+      updateLoveDays();
+    }
+
+    // 登入狀態改變時同步畫面
+    supabase.auth.onAuthStateChange((event, session) => {
+      if (event === "SIGNED_OUT") {
+        showLogin();
+      } else if (event === "SIGNED_IN" && session) {
+        checkMember(session.user);
+      }
+    });
+
+    initialize();
   </script>
 
 </body>

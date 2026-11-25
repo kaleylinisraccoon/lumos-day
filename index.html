@@ -4,7 +4,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f8f6fc">
   <title>Lumos Day ♡</title>
+
   <style>
     * {
       box-sizing: border-box;
@@ -13,82 +15,88 @@
     body {
       margin: 0;
       font-family: "Noto Sans TC", sans-serif;
-      background: #E6CFE6;
-      color: #D2D1FA;
+      background: #F8F6FC;
+      color: #6F6387;
     }
 
     header {
       text-align: center;
-      padding: 35px 15px 20px;
+      padding: 38px 15px 20px;
     }
 
     header h1 {
-      color: #c47f91;
+      color: #9882C5;
       font-family: Georgia, serif;
-      font-size: 38px;
+      font-size: 40px;
       margin: 0;
+      letter-spacing: 1px;
     }
 
     header p {
-      color: #b18b93;
-      font-size: 13px;
-      letter-spacing: 2px;
+      color: #A69ABD;
+      font-size: 11px;
+      letter-spacing: 3px;
+      margin-top: 10px;
     }
 
     .hero {
-      max-width: 650px;
+      max-width: 680px;
       margin: 20px auto;
-      padding: 40px 20px;
+      padding: 45px 20px;
       text-align: center;
-      background: #f8e6e9;
-      border-radius: 25px;
+      background: linear-gradient(135deg, #EEE8F8, #F7F2FA);
+      border: 1px solid #E8DFF3;
+      border-radius: 28px;
     }
 
     .hero .heart {
       font-size: 38px;
+      color: #BBAAD9;
     }
 
     .hero h2 {
       font-family: Georgia, serif;
-      font-size: 27px;
-      color: #b66f83;
+      font-size: 28px;
+      color: #8270A8;
+      margin: 15px 0;
     }
 
     .hero p {
-      font-size: 14px;
-      color: #98757e;
+      font-size: 13px;
+      color: #A69ABD;
     }
 
     .anniversary {
       max-width: 450px;
       margin: 25px auto;
-      padding: 25px;
-      background: #fffdfb;
-      border: 1px solid #f3dce1;
-      border-radius: 20px;
+      padding: 28px 20px;
+      background: #FFFDFF;
+      border: 1px solid #EAE3F2;
+      border-radius: 22px;
+      box-shadow: 0 8px 25px rgba(135, 112, 173, 0.07);
     }
 
     .anniversary .label {
-      font-size: 12px;
-      letter-spacing: 2px;
-      color: #b18b93;
+      font-size: 11px;
+      letter-spacing: 3px;
+      color: #A69ABD;
     }
 
     #days {
       font-family: Georgia, serif;
       font-size: 48px;
-      color: #ce8397;
-      margin: 12px 0;
+      color: #9882C5;
+      margin: 15px 0;
     }
 
     .date {
-      font-size: 13px;
-      color: #a68a91;
+      font-size: 12px;
+      color: #A69ABD;
     }
 
     .menu {
-      max-width: 650px;
-      margin: 30px auto;
+      max-width: 680px;
+      margin: 35px auto;
       padding: 0 15px;
       display: grid;
       grid-template-columns: repeat(2, 1fr);
@@ -96,51 +104,73 @@
     }
 
     .item {
-      background: white;
-      border: 1px solid #f3e1e4;
-      border-radius: 18px;
-      padding: 25px 10px;
+      display: block;
+      background: #FFFDFF;
+      border: 1px solid #EAE3F2;
+      border-radius: 20px;
+      padding: 27px 10px;
       text-align: center;
       text-decoration: none;
-      color: #916b77;
-      transition: 0.2s;
+      color: #8270A8;
+      transition: 0.25s;
     }
 
     .item:hover {
-      background: #fcecef;
-      transform: translateY(-3px);
+      background: #F0EAF8;
+      transform: translateY(-4px);
+      box-shadow: 0 8px 18px rgba(135, 112, 173, 0.10);
     }
 
     .item .emoji {
       font-size: 30px;
       display: block;
-      margin-bottom: 10px;
+      margin-bottom: 12px;
     }
 
     .item strong {
-      font-size: 15px;
+      font-size: 14px;
     }
 
     .item small {
       display: block;
-      margin-top: 6px;
-      color: #b69ba2;
+      margin-top: 7px;
+      color: #A69ABD;
+      font-size: 11px;
+    }
+
+    .message {
+      max-width: 600px;
+      margin: 30px auto;
+      padding: 0 20px;
+      text-align: center;
+      color: #A69ABD;
+      font-family: Georgia, serif;
+      font-style: italic;
+      font-size: 15px;
     }
 
     footer {
       text-align: center;
       padding: 35px 10px;
-      color: #c39ba5;
+      color: #BBAAD9;
       font-size: 12px;
     }
 
     @media (max-width: 400px) {
       header h1 {
-        font-size: 32px;
+        font-size: 34px;
       }
 
       .hero h2 {
         font-size: 23px;
+      }
+
+      #days {
+        font-size: 40px;
+      }
+
+      .item {
+        padding: 23px 5px;
       }
     }
   </style>
@@ -154,9 +184,10 @@
   </header>
 
   <main>
+
     <section class="hero">
       <div class="heart">♡</div>
-      <h2>Every day, a little brighter.</h2>
+      <h2>月が綺麗ですね。</h2>
       <p>日常小事</p>
     </section>
 
@@ -164,12 +195,13 @@
       <div class="label">OUR LOVE DAYS</div>
       <div id="days">♡</div>
       <div class="date">Since December 21, 2025</div>
-      <p style="font-size:13px;color:#b18b93">
+      <p style="font-size:13px;color:#A69ABD">
         一年啦!一年啦!明年就兩年啦!
       </p>
     </section>
 
     <section class="menu">
+
       <a class="item" href="#memories">
         <span class="emoji">📷</span>
         <strong>Fur Memories</strong>
@@ -190,14 +222,20 @@
 
       <a class="item" href="#rewards">
         <span class="emoji">🎟️</span>
-        <strong>好寶寶印章</strong>
-        <small>集滿點數換禮物</small>
+        <strong>Good Turns!</strong>
+        <small>好寶寶集點卡</small>
       </a>
+
     </section>
+
+    <div class="message">
+      "I am happiest when I am with you." ♡
+    </div>
+
   </main>
 
   <footer>
-    Made with sleepy, coffee, and love U ♡
+    Made with sleepy, coffee, and love U
     <p>© Lumos Day</p>
   </footer>
 
@@ -213,7 +251,7 @@
     ) + 1;
 
     document.getElementById("days").textContent =
-      days >= 1 ? days + " DAYS" : "COMING SOON ♡";
+      days >= 1 ? days + " DAYS ♡" : "COMING SOON ♡";
   </script>
 
 </body>

@@ -343,10 +343,6 @@
         </button>
       </form>
 
-<button type="button" id="forgotPasswordButton" class="text-btn">
-  Forgot Password? ♡
-</button>
-
 <section id="resetPasswordScreen" style="display:none;">
   <h2>Set a New Password ♡</h2>
   <div class="login-hint">請輸入你想使用的新密碼</div>
@@ -472,7 +468,6 @@
     appScreen.style.display = "none";
     resetScreen.style.display = "none";
     loginForm.style.display = "block";
-    document.getElementById("forgotPasswordButton").style.display = "block";
     loginMessage.textContent = message;
   }
 
@@ -480,7 +475,6 @@
     loginScreen.style.display = "flex";
     appScreen.style.display = "none";
     loginForm.style.display = "none";
-    document.getElementById("forgotPasswordButton").style.display = "none";
     resetScreen.style.display = "block";
     loginMessage.textContent = message;
   }

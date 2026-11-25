@@ -4,161 +4,264 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#f8f6fc">
+  <meta name="theme-color" content="#F8F6FC">
+
   <title>Lumos Day ♡</title>
 
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&family=Zen+Maru+Gothic:wght@400;500;700;900&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+
   <style>
+    /* ===== 基本設定 ===== */
+
+    :root {
+      --bg: #F8F6FC;
+      --lavender: #EEE8F8;
+      --light-purple: #E4DCF2;
+      --purple: #9882C5;
+      --deep-purple: #78699E;
+      --text: #766B89;
+      --muted: #A69ABD;
+      --white: #FFFDFF;
+      --border: #EAE2F3;
+    }
+
     * {
       box-sizing: border-box;
     }
 
     body {
       margin: 0;
-      font-family: "Noto Sans TC", sans-serif;
-      background: #F8F6FC;
-      color: #6F6387;
+      background: var(--bg);
+      color: var(--text);
+      font-family:
+        "Nunito",
+        "Zen Maru Gothic",
+        "Noto Sans TC",
+        sans-serif;
+      -webkit-font-smoothing: antialiased;
     }
+
+    a {
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    /* ===== 頁首 ===== */
 
     header {
       text-align: center;
-      padding: 38px 15px 20px;
+      padding: 30px 15px 22px;
     }
 
     header h1 {
-      color: #9882C5;
-      font-family: Georgia, serif;
-      font-size: 40px;
       margin: 0;
+      color: var(--purple);
+      font-family: "Nunito", sans-serif;
+      font-size: 38px;
+      font-weight: 900;
       letter-spacing: 1px;
     }
 
-    header p {
-      color: #A69ABD;
+    header .subtitle {
+      margin-top: 5px;
+      color: var(--muted);
+      font-family: "Nunito", sans-serif;
       font-size: 11px;
+      font-weight: 700;
       letter-spacing: 3px;
-      margin-top: 10px;
     }
+
+    /* ===== 主視覺區 ===== */
 
     .hero {
-      max-width: 680px;
-      margin: 20px auto;
-      padding: 45px 20px;
+      max-width: 650px;
+      min-height: 205px;
+      margin: 24px auto;
+      padding: 40px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
       text-align: center;
-      background: linear-gradient(135deg, #EEE8F8, #F7F2FA);
-      border: 1px solid #E8DFF3;
-      border-radius: 28px;
+
+      background: linear-gradient(
+        135deg,
+        #EEE8F8,
+        #F6F1FA
+      );
+
+      border: 1px solid #E7DDF2;
+      border-radius: 27px;
     }
 
-    .hero .heart {
-      font-size: 38px;
-      color: #BBAAD9;
-    }
-
-    .hero h2 {
-      font-family: Georgia, serif;
-      font-size: 28px;
-      color: #8270A8;
-      margin: 15px 0;
-    }
-
-    .hero p {
-      font-size: 13px;
-      color: #A69ABD;
-    }
-
-    .anniversary {
-      max-width: 450px;
-      margin: 25px auto;
-      padding: 28px 20px;
-      background: #FFFDFF;
-      border: 1px solid #EAE3F2;
-      border-radius: 22px;
-      box-shadow: 0 8px 25px rgba(135, 112, 173, 0.07);
-    }
-
-    .anniversary .label {
-      font-size: 11px;
-      letter-spacing: 3px;
-      color: #A69ABD;
-    }
-
-    #days {
-      font-family: Georgia, serif;
-      font-size: 48px;
-      color: #9882C5;
-      margin: 15px 0;
-    }
-
-    .date {
-      font-size: 12px;
-      color: #A69ABD;
-    }
-
-    .menu {
-      max-width: 680px;
-      margin: 35px auto;
-      padding: 0 15px;
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 15px;
-    }
-
-    .item {
-      display: block;
-      background: #FFFDFF;
-      border: 1px solid #EAE3F2;
-      border-radius: 20px;
-      padding: 27px 10px;
-      text-align: center;
-      text-decoration: none;
-      color: #8270A8;
-      transition: 0.25s;
-    }
-
-    .item:hover {
-      background: #F0EAF8;
-      transform: translateY(-4px);
-      box-shadow: 0 8px 18px rgba(135, 112, 173, 0.10);
-    }
-
-    .item .emoji {
-      font-size: 30px;
-      display: block;
+    .hero .paw {
+      font-size: 19px;
       margin-bottom: 12px;
     }
 
+    .hero h2 {
+      margin: 0;
+      color: var(--deep-purple);
+      font-family: "Zen Maru Gothic", sans-serif;
+      font-size: 27px;
+      font-weight: 900;
+    }
+
+    .hero p {
+      margin-top: 12px;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 500;
+    }
+
+    /* ===== 交往天數 ===== */
+
+    .anniversary {
+      width: calc(100% - 36px);
+      max-width: 420px;
+      margin: 24px auto 32px;
+      padding: 27px 20px 30px;
+
+      text-align: center;
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 22px;
+
+      box-shadow:
+        0 10px 30px rgba(125, 104, 166, 0.07);
+    }
+
+    .anniversary .label {
+      color: var(--muted);
+      font-family: "Nunito", sans-serif;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 3px;
+    }
+
+    #days {
+      margin: 17px 0 10px;
+      color: var(--purple);
+      font-family: "Nunito", sans-serif;
+      font-size: 45px;
+      font-weight: 800;
+      line-height: 1.2;
+    }
+
+    .date {
+      color: var(--muted);
+      font-family: "Nunito", sans-serif;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .anniversary .love-message {
+      margin: 12px 0 0;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 500;
+    }
+
+    /* ===== 功能選單 ===== */
+
+    .menu {
+      width: calc(100% - 30px);
+      max-width: 620px;
+      margin: 32px auto;
+
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+    }
+
+    .item {
+      min-height: 145px;
+      padding: 25px 10px;
+
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+
+      text-align: center;
+      text-decoration: none;
+
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+
+      color: var(--deep-purple);
+      transition: all 0.25s ease;
+    }
+
+    .item:hover {
+      background: var(--lavender);
+      transform: translateY(-4px);
+      box-shadow: 0 8px 20px rgba(125, 104, 166, 0.09);
+    }
+
+    .item:active {
+      transform: scale(0.97);
+    }
+
+    .item .emoji {
+      margin-bottom: 11px;
+      font-size: 27px;
+    }
+
     .item strong {
+      font-family: "Nunito", sans-serif;
       font-size: 14px;
+      font-weight: 900;
     }
 
     .item small {
-      display: block;
-      margin-top: 7px;
-      color: #A69ABD;
+      margin-top: 6px;
+      color: var(--muted);
       font-size: 11px;
+      font-weight: 500;
     }
 
+    /* ===== 頁尾 ===== */
+
     .message {
-      max-width: 600px;
-      margin: 30px auto;
-      padding: 0 20px;
+      margin: 35px 15px;
       text-align: center;
-      color: #A69ABD;
-      font-family: Georgia, serif;
-      font-style: italic;
-      font-size: 15px;
+      color: var(--muted);
+      font-family: "Nunito", sans-serif;
+      font-size: 14px;
+      font-weight: 600;
     }
 
     footer {
+      padding: 28px 10px 35px;
       text-align: center;
-      padding: 35px 10px;
-      color: #BBAAD9;
-      font-size: 12px;
+      color: #BBAFD0;
+      font-family: "Nunito", sans-serif;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 1px;
     }
 
-    @media (max-width: 400px) {
+    /* ===== 手機版 ===== */
+
+    @media (max-width: 480px) {
+
+      header {
+        padding-top: 27px;
+      }
+
       header h1 {
-        font-size: 34px;
+        font-size: 33px;
+      }
+
+      .hero {
+        min-height: 185px;
+        margin: 20px 16px;
+        padding: 30px 15px;
       }
 
       .hero h2 {
@@ -166,11 +269,20 @@
       }
 
       #days {
-        font-size: 40px;
+        font-size: 39px;
+      }
+
+      .menu {
+        gap: 11px;
       }
 
       .item {
-        padding: 23px 5px;
+        min-height: 132px;
+        padding: 20px 5px;
+      }
+
+      .item strong {
+        font-size: 13px;
       }
     }
   </style>
@@ -178,28 +290,47 @@
 
 <body>
 
+  <!-- 頁首 -->
   <header>
     <h1>Lumos Day 🐕</h1>
-    <p>Curly Dog & Sleepy Cat</p>
+    <div class="subtitle">
+      Curly Dog &amp; Sleepy Cat
+    </div>
   </header>
 
   <main>
 
+    <!-- 主視覺 -->
     <section class="hero">
       <div class="paw">🐾</div>
+
       <h2>月が綺麗ですね。</h2>
-      <p>一週年特輯</p>
+
+      <p>— 一週年特輯 ♡</p>
     </section>
 
-    <section class="anniversary" style="text-align:center">
-      <div class="label">OUR LOVE DAYS</div>
-      <div id="days">♡</div>
-      <div class="date">Since December 21, 2025</div>
-      <p style="font-size:13px;color:#A69ABD">
-        一年啦!一年啦!明年就兩年啦!
+    <!-- 交往天數 -->
+    <section class="anniversary">
+
+      <div class="label">
+        OUR LOVE DAYS
+      </div>
+
+      <div id="days">
+        ♡
+      </div>
+
+      <div class="date">
+        Since December 21, 2025
+      </div>
+
+      <p class="love-message">
+        一年啦！一年啦！明年就兩年啦！
       </p>
+
     </section>
 
+    <!-- 功能入口 -->
     <section class="menu">
 
       <a class="item" href="#memories">
@@ -228,13 +359,16 @@
 
     </section>
 
+    <!-- 小語 -->
   </main>
 
+  <!-- 頁尾 -->
   <footer>
-    Made with sleepy, coffee, and love U
+    Made with sleepy, coffee, and love U. 
     <p>© Lumos Day</p>
   </footer>
 
+  <!-- 交往天數計算 -->
   <script>
     const startDate = new Date(2025, 11, 21);
     const today = new Date();

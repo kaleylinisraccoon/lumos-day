@@ -302,8 +302,8 @@
       <div class="login-logo">Lumos Day ♡</div>
       <div class="login-subtitle">CURLY DOG &amp; SLEEPY CAT</div>
 
-      <h2>Welcome to our little world</h2>
-      <div class="login-hint">請登入你們的專屬帳號 ♡</div>
+      <h2>Welcome to CURLY DOG &amp; SLEEPY CAT</h2>
+      <div class="login-hint">Login</div>
 
       <form id="loginForm">
         <input
@@ -398,136 +398,147 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <script>
-    const supabaseClient_URL = "https://lttnbiwyosxaciggphei.supabaseClient.co";
-    const supabaseClient_KEY = "sb_publishable_kffwFu-4hfWa3_P0uD1law_crdsSZGb";
+    (function () {
+      // Supabase 連線設定
+      const SUPABASE_URL = "https://lttnbiwyosxaciggphei.supabase.co";
+      const SUPABASE_KEY = "sb_publishable_kffwFu-4hfWa3_P0uD1law_crdsSZGb";
 
-  const supabaseClient = window.supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_KEY
-  );
-    const loginScreen = document.getElementById("loginScreen");
-    const appScreen = document.getElementById("appScreen");
-    const loginForm = document.getElementById("loginForm");
-    const loginButton = document.getElementById("loginButton");
-    const loginMessage = document.getElementById("loginMessage");
+      const supabaseClient = window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+      );
 
-    function showLogin(message = "") {
-      loginScreen.style.display = "flex";
-      appScreen.style.display = "none";
-      loginMessage.textContent = message;
-    }
+      const loginScreen = document.getElementById("loginScreen");
+      const appScreen = document.getElementById("appScreen");
+      const loginForm = document.getElementById("loginForm");
+      const loginButton = document.getElementById("loginButton");
+      const loginMessage = document.getElementById("loginMessage");
 
-    function showHome(email) {
-      loginScreen.style.display = "none";
-      appScreen.style.display = "block";
-      document.getElementById("userEmail").textContent = email || "";
-    }
-
-    // 確認登入者是否為共同空間成員
-    async function checkMember(user) {
-      const { data, error } = await supabaseClient
-        .from("couple_members")
-        .select("couple_id, role")
-        .eq("user_id", user.id)
-        .maybeSingle();
-
-      if (error) {
-        console.error("Member check error:", error);
-        showLogin("無法確認成員資格，請稍後再試。");
-        return;
+      // 顯示登入畫面
+      function showLogin(message = "") {
+        loginScreen.style.display = "flex";
+        appScreen.style.display = "none";
+        loginMessage.textContent = message;
       }
 
-      if (!data) {
-        showLogin("這個帳號尚未加入 Lumos Day 共同空間。");
-        return;
+      // 顯示首頁
+      function showHome(email) {
+        loginScreen.style.display = "none";
+        appScreen.style.display = "block";
+        document.getElementById("userEmail").textContent = email || "";
       }
 
-      showHome(user.email);
-    }
+      // 確認是否為共同空間成員
+      async function checkMember(user) {
+        const { data, error } = await supabaseClient
+          .from("couple_members")
+          .select("couple_id, role")
+          .eq("user_id", user.id)
+          .maybeSingle();
 
-    // 計算交往天數
-    function updateLoveDays() {
-      const startDate = new Date(2025, 11, 21);
-      const today = new Date();
+        if (error) {
+          console.error("Member check error:", error);
+          showLogin("無法確認成員資格，請稍後再試。");
+          return;
+        }
 
-      startDate.setHours(0, 0, 0, 0);
-      today.setHours(0, 0, 0, 0);
+        if (!data) {
+          showLogin("這個帳號尚未加入 Lumos Day 共同空間。");
+          return;
+        }
 
-      const days = Math.floor(
-        (today - startDate) / (1000 * 60 * 60 * 24)
-      ) + 1;
+        showHome(user.email);
+      }
 
-      document.getElementById("days").textContent =
-        days >= 1 ? days + " DAYS ♡" : "COMING SOON ♡";
-    }
+      // 計算交往天數
+      function updateLoveDays() {
+        const startDate = new Date(2025, 11, 21);
+        const today = new Date();
 
-    // Email + 密碼登入
-    loginForm.addEventListener("submit", async (event) => {
-      event.preventDefault();
+        startDate.setHours(0, 0, 0, 0);
+        today.setHours(0, 0, 0, 0);
 
-      loginButton.disabled = true;
-      loginButton.textContent = "Logging in...";
-      loginMessage.textContent = "";
+        const days = Math.floor(
+          (today - startDate) / (1000 * 60 * 60 * 24)
+        ) + 1;
 
-      const email = document.getElementById("email").value.trim();
-      const password = document.getElementById("password").value;
+        document.getElementById("days").textContent =
+          days >= 1 ? days + " DAYS ♡" : "COMING SOON ♡";
+      }
 
-      const { data, error } = await supabaseClient.auth.signInWithPassword({
-        email,
-        password
+      // Email + 密碼登入
+      loginForm.addEventListener("submit", async (event) => {
+        event.preventDefault();
+
+        loginButton.disabled = true;
+        loginButton.textContent = "Logging in...";
+        loginMessage.textContent = "";
+
+        const email = document.getElementById("email").value.trim();
+        const password = document.getElementById("password").value;
+
+        try {
+          const { data, error } = await supabaseClient.auth.signInWithPassword({
+            email,
+            password
+          });
+
+          if (error) {
+            loginMessage.textContent = "登入失敗：" + error.message;
+            return;
+          }
+
+          await checkMember(data.user);
+
+        } catch (error) {
+          console.error("Login error:", error);
+          loginMessage.textContent = "連線發生問題，請稍後再試。";
+
+        } finally {
+          loginButton.disabled = false;
+          loginButton.textContent = "Login ♡";
+        }
       });
 
-      loginButton.disabled = false;
-      loginButton.textContent = "Login ♡";
+      // 登出
+      document.getElementById("logoutButton").addEventListener("click", async () => {
+        const { error } = await supabaseClient.auth.signOut();
 
-      if (error) {
-        loginMessage.textContent = "登入失敗：" + error.message;
-        return;
-      }
+        if (error) {
+          alert("登出失敗，請再試一次。");
+          return;
+        }
 
-      await checkMember(data.user);
-    });
-
-    // 登出
-    document.getElementById("logoutButton").addEventListener("click", async () => {
-      const { error } = await supabaseClient.auth.signOut();
-
-      if (error) {
-        alert("登出失敗，請再試一次。");
-        return;
-      }
-
-      showLogin();
-    });
-
-    // 網頁載入時檢查是否已有登入狀態
-    async function initialize() {
-      showLogin();
-
-      const { data, error } = await supabaseClient.auth.getSession();
-
-      if (error) {
-        showLogin("讀取登入狀態失敗，請重新整理。");
-        return;
-      }
-
-      if (data.session) {
-        await checkMember(data.session.user);
-      }
-
-      updateLoveDays();
-    }
-
-    // 登入狀態改變時同步畫面
-    supabaseClient.auth.onAuthStateChange((event, session) => {
-      if (event === "SIGNED_OUT") {
         showLogin();
-      } else if (event === "SIGNED_IN" && session) {
-        checkMember(session.user);
-      }
-    });
+      });
 
-    initialize();
+      // 網頁載入時檢查登入狀態
+      async function initialize() {
+        showLogin();
+        updateLoveDays();
+
+        const { data, error } = await supabaseClient.auth.getSession();
+
+        if (error) {
+          showLogin("讀取登入狀態失敗，請重新整理。");
+          return;
+        }
+
+        if (data.session) {
+          await checkMember(data.session.user);
+        }
+      }
+
+      // 登出狀態改變時同步畫面
+      supabaseClient.auth.onAuthStateChange((event) => {
+        if (event === "SIGNED_OUT") {
+          showLogin();
+        }
+      });
+
+      initialize();
+
+    })();
   </script>
 
 </body>

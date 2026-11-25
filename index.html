@@ -398,14 +398,13 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <script>
-    const SUPABASE_URL = "https://lttnbiwyosxaciggphei.supabase.co";
-    const SUPABASE_KEY = "sb_publishable_kffwFu-4hfWa3_P0uD1law_crdsSZGb";
+    const supabaseClient_URL = "https://lttnbiwyosxaciggphei.supabaseClient.co";
+    const supabaseClient_KEY = "sb_publishable_kffwFu-4hfWa3_P0uD1law_crdsSZGb";
 
-    const supabase = window.supabase.createClient(
-      SUPABASE_URL,
-      SUPABASE_KEY
-    );
-
+  const supabaseClient = window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+  );
     const loginScreen = document.getElementById("loginScreen");
     const appScreen = document.getElementById("appScreen");
     const loginForm = document.getElementById("loginForm");
@@ -426,7 +425,7 @@
 
     // 確認登入者是否為共同空間成員
     async function checkMember(user) {
-      const { data, error } = await supabase
+      const { data, error } = await supabaseClient
         .from("couple_members")
         .select("couple_id, role")
         .eq("user_id", user.id)
@@ -473,7 +472,7 @@
       const email = document.getElementById("email").value.trim();
       const password = document.getElementById("password").value;
 
-      const { data, error } = await supabase.auth.signInWithPassword({
+      const { data, error } = await supabaseClient.auth.signInWithPassword({
         email,
         password
       });
@@ -491,7 +490,7 @@
 
     // 登出
     document.getElementById("logoutButton").addEventListener("click", async () => {
-      const { error } = await supabase.auth.signOut();
+      const { error } = await supabaseClient.auth.signOut();
 
       if (error) {
         alert("登出失敗，請再試一次。");
@@ -505,7 +504,7 @@
     async function initialize() {
       showLogin();
 
-      const { data, error } = await supabase.auth.getSession();
+      const { data, error } = await supabaseClient.auth.getSession();
 
       if (error) {
         showLogin("讀取登入狀態失敗，請重新整理。");
@@ -520,7 +519,7 @@
     }
 
     // 登入狀態改變時同步畫面
-    supabase.auth.onAuthStateChange((event, session) => {
+    supabaseClient.auth.onAuthStateChange((event, session) => {
       if (event === "SIGNED_OUT") {
         showLogin();
       } else if (event === "SIGNED_IN" && session) {

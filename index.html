@@ -438,7 +438,7 @@
 
         if (error) {
           console.error("Member check error:", error);
-          showLogin("無法確認成員資格，請稍後再試。");
+          showLogin("資料庫錯誤：" + error.message);
           return;
         }
 

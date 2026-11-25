@@ -108,6 +108,22 @@
     }
 
     .primary-btn:disabled {
+
+      .text-btn {
+  display: block;
+  margin: 14px auto 0;
+  padding: 5px;
+  border: none;
+  background: transparent;
+  color: var(--purple);
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.text-btn:hover {
+  color: var(--deep-purple);
+  text-decoration: underline;
+}
       opacity: .6;
       cursor: wait;
     }
@@ -327,6 +343,37 @@
         </button>
       </form>
 
+<button type="button" id="forgotPasswordButton" class="text-btn">
+  Forgot Password? ♡
+</button>
+
+<section id="resetPasswordScreen" style="display:none;">
+  <h2>Set a New Password ♡</h2>
+  <div class="login-hint">請輸入你想使用的新密碼</div>
+
+  <form id="resetPasswordForm">
+    <input
+      id="newPassword"
+      type="password"
+      placeholder="New Password（至少 6 個字元）"
+      minlength="6"
+      required
+    >
+
+    <input
+      id="confirmPassword"
+      type="password"
+      placeholder="Confirm New Password"
+      minlength="6"
+      required
+    >
+
+    <button class="primary-btn" type="submit" id="resetPasswordButton">
+      Update Password ♡
+    </button>
+  </form>
+</section>
+      
       <div id="loginMessage" role="status"></div>
       <div class="login-footer">Only for two of us ♡</div>
     </div>
@@ -395,151 +442,269 @@
   </div>
 
   <!-- Supabase 登入功能 -->
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+ 
+<!-- Supabase 登入功能 -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-  <script>
-    (function () {
-      // Supabase 連線設定
-      const SUPABASE_URL = "https://lttnbiwyosxaciggphei.supabase.co";
-      const SUPABASE_KEY = "sb_publishable_kffwFu-4hfWa3_P0uD1law_crdsSZGb";
+<script>
+(function () {
+  const SUPABASE_URL = "https://lttnbiwyosxaciggphei.supabase.co";
+  const SUPABASE_KEY = "sb_publishable_kffwFu-4hfWa3_P0uD1law_crdsSZGb";
 
-      const supabaseClient = window.supabase.createClient(
-        SUPABASE_URL,
-        SUPABASE_KEY
+  const supabaseClient = window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+  );
+
+  const loginScreen = document.getElementById("loginScreen");
+  const appScreen = document.getElementById("appScreen");
+  const loginForm = document.getElementById("loginForm");
+  const loginButton = document.getElementById("loginButton");
+  const loginMessage = document.getElementById("loginMessage");
+
+  const resetScreen = document.getElementById("resetPasswordScreen");
+  const resetForm = document.getElementById("resetPasswordForm");
+
+  let recoveryMode = false;
+
+  function showLogin(message = "") {
+    loginScreen.style.display = "flex";
+    appScreen.style.display = "none";
+    resetScreen.style.display = "none";
+    loginForm.style.display = "block";
+    document.getElementById("forgotPasswordButton").style.display = "block";
+    loginMessage.textContent = message;
+  }
+
+  function showReset(message = "") {
+    loginScreen.style.display = "flex";
+    appScreen.style.display = "none";
+    loginForm.style.display = "none";
+    document.getElementById("forgotPasswordButton").style.display = "none";
+    resetScreen.style.display = "block";
+    loginMessage.textContent = message;
+  }
+
+  function showHome(email) {
+    loginScreen.style.display = "none";
+    appScreen.style.display = "block";
+    document.getElementById("userEmail").textContent = email || "";
+  }
+
+  async function checkMember(user) {
+    const { data, error } = await supabaseClient
+      .from("couple_members")
+      .select("couple_id, role")
+      .eq("user_id", user.id)
+      .maybeSingle();
+
+    if (error) {
+      console.error("Member check error:", error);
+      showLogin("資料庫錯誤：" + error.message);
+      return;
+    }
+
+    if (!data) {
+      showLogin("這個帳號尚未加入 Lumos Day 共同空間。");
+      return;
+    }
+
+    showHome(user.email);
+  }
+
+  // 計算交往天數
+  function updateLoveDays() {
+    const startDate = new Date(2025, 11, 21);
+    const today = new Date();
+
+    startDate.setHours(0, 0, 0, 0);
+    today.setHours(0, 0, 0, 0);
+
+    const days = Math.floor(
+      (today - startDate) / (1000 * 60 * 60 * 24)
+    ) + 1;
+
+    document.getElementById("days").textContent =
+      days >= 1 ? days + " DAYS ♡" : "COMING SOON ♡";
+  }
+
+  // 正常登入
+  loginForm.addEventListener("submit", async (event) => {
+    event.preventDefault();
+
+    loginButton.disabled = true;
+    loginButton.textContent = "Logging in...";
+    loginMessage.textContent = "";
+
+    const email = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value;
+
+    try {
+      const { data, error } = await supabaseClient.auth.signInWithPassword({
+        email,
+        password
+      });
+
+      if (error) {
+        loginMessage.textContent = "登入失敗：" + error.message;
+        return;
+      }
+
+      await checkMember(data.user);
+
+    } catch (error) {
+      loginMessage.textContent = "連線發生問題，請稍後再試。";
+    } finally {
+      loginButton.disabled = false;
+      loginButton.textContent = "Login ♡";
+    }
+  });
+
+  // 忘記密碼：寄送重設信
+  document.getElementById("forgotPasswordButton")
+    .addEventListener("click", async () => {
+
+      const email = document.getElementById("email").value.trim();
+
+      if (!email) {
+        loginMessage.textContent = "請先輸入你的 Email。";
+        document.getElementById("email").focus();
+        return;
+      }
+
+      loginMessage.textContent = "正在寄送重設密碼信件...";
+
+      const { error } = await supabaseClient.auth.resetPasswordForEmail(
+        email,
+        {
+          redirectTo: window.location.origin + window.location.pathname
+        }
       );
 
-      const loginScreen = document.getElementById("loginScreen");
-      const appScreen = document.getElementById("appScreen");
-      const loginForm = document.getElementById("loginForm");
-      const loginButton = document.getElementById("loginButton");
-      const loginMessage = document.getElementById("loginMessage");
-
-      // 顯示登入畫面
-      function showLogin(message = "") {
-        loginScreen.style.display = "flex";
-        appScreen.style.display = "none";
-        loginMessage.textContent = message;
+      if (error) {
+        loginMessage.textContent = "寄送失敗：" + error.message;
+        return;
       }
 
-      // 顯示首頁
-      function showHome(email) {
-        loginScreen.style.display = "none";
-        appScreen.style.display = "block";
-        document.getElementById("userEmail").textContent = email || "";
-      }
+      loginMessage.textContent =
+        "重設密碼信已寄出！請查看你的 Email ♡";
+    });
 
-      // 確認是否為共同空間成員
-      async function checkMember(user) {
-        const { data, error } = await supabaseClient
-          .from("couple_members")
-          .select("couple_id, role")
-          .eq("user_id", user.id)
-          .maybeSingle();
+  // 收到重設密碼連結後顯示新密碼畫面
+  supabaseClient.auth.onAuthStateChange((event, session) => {
+    if (event === "PASSWORD_RECOVERY") {
+      recoveryMode = true;
+      showReset("請設定你的新密碼 ♡");
+    }
 
-        if (error) {
-          console.error("Member check error:", error);
-          showLogin("資料庫錯誤：" + error.message);
-          return;
-        }
+    if (event === "SIGNED_OUT") {
+      recoveryMode = false;
+      showLogin();
+    }
+  });
 
-        if (!data) {
-          showLogin("這個帳號尚未加入 Lumos Day 共同空間。");
-          return;
-        }
+  // 更新新密碼
+  resetForm.addEventListener("submit", async (event) => {
+    event.preventDefault();
 
-        showHome(user.email);
-      }
+    const password = document.getElementById("newPassword").value;
+    const confirmPassword = document.getElementById("confirmPassword").value;
+    const button = document.getElementById("resetPasswordButton");
 
-      // 計算交往天數
-      function updateLoveDays() {
-        const startDate = new Date(2025, 11, 21);
-        const today = new Date();
+    if (password.length < 6) {
+      loginMessage.textContent = "密碼至少需要 6 個字元。";
+      return;
+    }
 
-        startDate.setHours(0, 0, 0, 0);
-        today.setHours(0, 0, 0, 0);
+    if (password !== confirmPassword) {
+      loginMessage.textContent = "兩次輸入的密碼不一致。";
+      return;
+    }
 
-        const days = Math.floor(
-          (today - startDate) / (1000 * 60 * 60 * 24)
-        ) + 1;
+    button.disabled = true;
+    button.textContent = "Updating...";
 
-        document.getElementById("days").textContent =
-          days >= 1 ? days + " DAYS ♡" : "COMING SOON ♡";
-      }
-
-      // Email + 密碼登入
-      loginForm.addEventListener("submit", async (event) => {
-        event.preventDefault();
-
-        loginButton.disabled = true;
-        loginButton.textContent = "Logging in...";
-        loginMessage.textContent = "";
-
-        const email = document.getElementById("email").value.trim();
-        const password = document.getElementById("password").value;
-
-        try {
-          const { data, error } = await supabaseClient.auth.signInWithPassword({
-            email,
-            password
-          });
-
-          if (error) {
-            loginMessage.textContent = "登入失敗：" + error.message;
-            return;
-          }
-
-          await checkMember(data.user);
-
-        } catch (error) {
-          console.error("Login error:", error);
-          loginMessage.textContent = "連線發生問題，請稍後再試。";
-
-        } finally {
-          loginButton.disabled = false;
-          loginButton.textContent = "Login ♡";
-        }
+    try {
+      const { data, error } = await supabaseClient.auth.updateUser({
+        password: password
       });
 
-      // 登出
-      document.getElementById("logoutButton").addEventListener("click", async () => {
-        const { error } = await supabaseClient.auth.signOut();
-
-        if (error) {
-          alert("登出失敗，請再試一次。");
-          return;
-        }
-
-        showLogin();
-      });
-
-      // 網頁載入時檢查登入狀態
-      async function initialize() {
-        showLogin();
-        updateLoveDays();
-
-        const { data, error } = await supabaseClient.auth.getSession();
-
-        if (error) {
-          showLogin("讀取登入狀態失敗，請重新整理。");
-          return;
-        }
-
-        if (data.session) {
-          await checkMember(data.session.user);
-        }
+      if (error) {
+        loginMessage.textContent = "更新失敗：" + error.message;
+        return;
       }
 
-      // 登出狀態改變時同步畫面
-      supabaseClient.auth.onAuthStateChange((event) => {
-        if (event === "SIGNED_OUT") {
-          showLogin();
-        }
-      });
+      recoveryMode = false;
 
-      initialize();
+      // 清除網址中的復原參數
+      window.history.replaceState(
+        {},
+        document.title,
+        window.location.pathname
+      );
 
-    })();
-  </script>
+      loginMessage.textContent = "密碼更新成功！";
+
+      if (data.user) {
+        await checkMember(data.user);
+      } else {
+        showLogin("密碼更新成功！請使用新密碼登入。");
+      }
+
+    } catch (error) {
+      loginMessage.textContent = "發生錯誤，請重新嘗試。";
+    } finally {
+      button.disabled = false;
+      button.textContent = "Update Password ♡";
+    }
+  });
+
+  // 登出
+  document.getElementById("logoutButton")
+    .addEventListener("click", async () => {
+
+      const { error } = await supabaseClient.auth.signOut();
+
+      if (error) {
+        alert("登出失敗，請再試一次。");
+        return;
+      }
+
+      showLogin();
+    });
+
+  // 初始化
+  async function initialize() {
+    updateLoveDays();
+    showLogin();
+
+    const { data, error } = await supabaseClient.auth.getSession();
+
+    if (error) {
+      showLogin("讀取登入狀態失敗，請重新整理。");
+      return;
+    }
+
+    // 如果是從密碼重設信件回來，不顯示首頁
+    if (
+      recoveryMode ||
+      window.location.hash.includes("type=recovery")
+    ) {
+      recoveryMode = true;
+      showReset("請設定你的新密碼 ♡");
+      return;
+    }
+
+    if (data.session) {
+      await checkMember(data.session.user);
+    }
+  }
+
+  initialize();
+
+})();
+</script>
+
 
 </body>
 </html>

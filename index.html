@@ -1,0 +1,220 @@
+
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lumos Day ♡</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Noto Sans TC", sans-serif;
+      background: #fff8f7;
+      color: #765660;
+    }
+
+    header {
+      text-align: center;
+      padding: 35px 15px 20px;
+    }
+
+    header h1 {
+      color: #c47f91;
+      font-family: Georgia, serif;
+      font-size: 38px;
+      margin: 0;
+    }
+
+    header p {
+      color: #b18b93;
+      font-size: 13px;
+      letter-spacing: 2px;
+    }
+
+    .hero {
+      max-width: 650px;
+      margin: 20px auto;
+      padding: 40px 20px;
+      text-align: center;
+      background: #f8e6e9;
+      border-radius: 25px;
+    }
+
+    .hero .heart {
+      font-size: 38px;
+    }
+
+    .hero h2 {
+      font-family: Georgia, serif;
+      font-size: 27px;
+      color: #b66f83;
+    }
+
+    .hero p {
+      font-size: 14px;
+      color: #98757e;
+    }
+
+    .anniversary {
+      max-width: 450px;
+      margin: 25px auto;
+      padding: 25px;
+      background: #fffdfb;
+      border: 1px solid #f3dce1;
+      border-radius: 20px;
+    }
+
+    .anniversary .label {
+      font-size: 12px;
+      letter-spacing: 2px;
+      color: #b18b93;
+    }
+
+    #days {
+      font-family: Georgia, serif;
+      font-size: 48px;
+      color: #ce8397;
+      margin: 12px 0;
+    }
+
+    .date {
+      font-size: 13px;
+      color: #a68a91;
+    }
+
+    .menu {
+      max-width: 650px;
+      margin: 30px auto;
+      padding: 0 15px;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 15px;
+    }
+
+    .item {
+      background: white;
+      border: 1px solid #f3e1e4;
+      border-radius: 18px;
+      padding: 25px 10px;
+      text-align: center;
+      text-decoration: none;
+      color: #916b77;
+      transition: 0.2s;
+    }
+
+    .item:hover {
+      background: #fcecef;
+      transform: translateY(-3px);
+    }
+
+    .item .emoji {
+      font-size: 30px;
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    .item strong {
+      font-size: 15px;
+    }
+
+    .item small {
+      display: block;
+      margin-top: 6px;
+      color: #b69ba2;
+    }
+
+    footer {
+      text-align: center;
+      padding: 35px 10px;
+      color: #c39ba5;
+      font-size: 12px;
+    }
+
+    @media (max-width: 400px) {
+      header h1 {
+        font-size: 32px;
+      }
+
+      .hero h2 {
+        font-size: 23px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <h1>Lumos Day ♡</h1>
+    <p>A LITTLE WORLD MADE FOR TWO</p>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="heart">♡</div>
+      <h2>Every day, a little brighter.</h2>
+      <p>日常小事</p>
+    </section>
+
+    <section class="anniversary" style="text-align:center">
+      <div class="label">OUR LOVE DAYS</div>
+      <div id="days">♡</div>
+      <div class="date">Since December 21, 2025</div>
+      <p style="font-size:13px;color:#b18b93">
+        一年啦!一年啦!明年就兩年啦!
+      </p>
+    </section>
+
+    <section class="menu">
+      <a class="item" href="#memories">
+        <span class="emoji">📷</span>
+        <strong>Fur Memories</strong>
+        <small>毛毛相簿</small>
+      </a>
+
+      <a class="item" href="#letters">
+        <span class="emoji">💌</span>
+        <strong>Do you copy?</strong>
+        <small>留言區</small>
+      </a>
+
+      <a class="item" href="#dates">
+        <span class="emoji">🗓️</span>
+        <strong>Where are we going?</strong>
+        <small>去哪裡?</small>
+      </a>
+
+      <a class="item" href="#rewards">
+        <span class="emoji">🎟️</span>
+        <strong>好寶寶印章</strong>
+        <small>集滿點數換禮物</small>
+      </a>
+    </section>
+  </main>
+
+  <footer>
+    Made with sleepy, coffee, and love U ♡
+    <p>© Lumos Day</p>
+  </footer>
+
+  <script>
+    const startDate = new Date(2025, 11, 21);
+    const today = new Date();
+
+    startDate.setHours(0, 0, 0, 0);
+    today.setHours(0, 0, 0, 0);
+
+    const days = Math.floor(
+      (today - startDate) / (1000 * 60 * 60 * 24)
+    ) + 1;
+
+    document.getElementById("days").textContent =
+      days >= 1 ? days + " DAYS" : "COMING SOON ♡";
+  </script>
+
+</body>
+</html>

@@ -561,25 +561,20 @@
       <section id="memoriesSection">
         <div class="section-heading">
           <h2>📷 Fur Memories</h2>
-          <p>把每一個珍惜的瞬間，留在我們的小宇宙。</p>
-        </div>
+          </div>
 
         <form class="memory-form" id="memoryForm">
 
-          <label for="memoryPhoto">照片</label>
+          <label for="memoryPhoto">Photo</label>
           <input id="memoryPhoto" type="file"
             accept="image/*" required>
 
-          <label for="memoryTitle">回憶標題</label>
+          <label for="memoryTitle">Title</label>
           <input id="memoryTitle" type="text"
-            placeholder="例如：第一次一起看海" maxlength="100">
+            placeholder="去年的今天" maxlength="100">
 
-          <label for="memoryDate">回憶日期</label>
+          <label for="memoryDate">Date</label>
           <input id="memoryDate" type="date" required>
-
-          <label for="memoryDescription">回憶故事</label>
-          <textarea id="memoryDescription"
-            placeholder="那一天發生了什麼事呢？"></textarea>
 
           <button class="upload-btn" id="uploadMemoryButton"
             type="submit">
@@ -590,7 +585,7 @@
         </form>
 
         <div class="memory-grid" id="memoryGrid">
-          <div class="empty-memories">正在載入回憶 ♡</div>
+          <div class="empty-memories">Loading...... ♡</div>
         </div>
       </section>
     </main>

@@ -33,9 +33,10 @@
       -webkit-font-smoothing: antialiased;
     }
 
-    button, input { font: inherit; }
+    button, input, textarea { font: inherit; }
 
-    /* 登入畫面 */
+    button { cursor: pointer; }
+
     #loginScreen {
       min-height: 100vh;
       display: flex;
@@ -104,26 +105,9 @@
       background: var(--purple);
       color: white;
       font-weight: 800;
-      cursor: pointer;
     }
 
     .primary-btn:disabled {
-
-      .text-btn {
-  display: block;
-  margin: 14px auto 0;
-  padding: 5px;
-  border: none;
-  background: transparent;
-  color: var(--purple);
-  font-size: 12px;
-  cursor: pointer;
-}
-
-.text-btn:hover {
-  color: var(--deep-purple);
-  text-decoration: underline;
-}
       opacity: .6;
       cursor: wait;
     }
@@ -142,7 +126,6 @@
       font-size: 11px;
     }
 
-    /* 登入後的首頁 */
     #appScreen { display: none; }
 
     .topbar {
@@ -163,7 +146,6 @@
       padding: 7px 13px;
       background: var(--white);
       color: var(--deep-purple);
-      cursor: pointer;
     }
 
     header {
@@ -297,6 +279,165 @@
       letter-spacing: 1px;
     }
 
+    /* 回憶相簿 */
+
+    #memoriesSection {
+      width: calc(100% - 30px);
+      max-width: 650px;
+      margin: 45px auto;
+      padding: 25px 20px;
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+    }
+
+    .section-heading {
+      text-align: center;
+      margin-bottom: 24px;
+    }
+
+    .section-heading h2 {
+      color: var(--deep-purple);
+      font-size: 24px;
+      margin: 0;
+    }
+
+    .section-heading p {
+      color: var(--muted);
+      font-size: 12px;
+      margin-top: 8px;
+    }
+
+    .memory-form {
+      padding: 18px;
+      background: #FBF9FD;
+      border: 1px solid var(--border);
+      border-radius: 18px;
+    }
+
+    .memory-form label {
+      display: block;
+      margin: 13px 0 6px;
+      color: var(--deep-purple);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .memory-form input,
+    .memory-form textarea {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: white;
+      color: var(--text);
+      outline: none;
+    }
+
+    .memory-form input:focus,
+    .memory-form textarea:focus {
+      border-color: var(--purple);
+    }
+
+    .memory-form textarea {
+      min-height: 100px;
+      resize: vertical;
+    }
+
+    .memory-form input[type="file"] {
+      padding: 10px;
+    }
+
+    .upload-btn {
+      width: 100%;
+      margin-top: 18px;
+      padding: 13px;
+      border: none;
+      border-radius: 13px;
+      background: var(--purple);
+      color: white;
+      font-weight: 800;
+    }
+
+    .upload-btn:disabled {
+      opacity: .6;
+      cursor: wait;
+    }
+
+    #memoryMessage {
+      margin-top: 12px;
+      text-align: center;
+      font-size: 12px;
+      color: var(--deep-purple);
+      overflow-wrap: anywhere;
+    }
+
+    .memory-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 25px;
+    }
+
+    .memory-card {
+      overflow: hidden;
+      background: #FBF9FD;
+      border: 1px solid var(--border);
+      border-radius: 18px;
+    }
+
+    .memory-card img {
+      display: block;
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      object-fit: cover;
+      background: var(--lavender);
+    }
+
+    .memory-content {
+      padding: 12px;
+    }
+
+    .memory-title {
+      color: var(--deep-purple);
+      font-weight: 900;
+      font-size: 14px;
+      overflow-wrap: anywhere;
+    }
+
+    .memory-date {
+      margin-top: 5px;
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    .memory-description {
+      margin-top: 10px;
+      font-size: 12px;
+      line-height: 1.7;
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+    }
+
+    .delete-memory-btn {
+      width: 100%;
+      margin-top: 12px;
+      padding: 9px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: white;
+      color: #B56F87;
+      font-size: 12px;
+    }
+
+    .empty-memories {
+      grid-column: 1 / -1;
+      padding: 30px 10px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
     @media (max-width: 480px) {
       header { padding-top: 27px; }
       header h1 { font-size: 33px; }
@@ -306,6 +447,9 @@
       .menu { gap: 11px; }
       .item { min-height: 132px; padding: 20px 5px; }
       .item strong { font-size: 13px; }
+      #memoriesSection { padding: 20px 13px; }
+      .memory-grid { gap: 10px; }
+      .memory-content { padding: 10px; }
     }
   </style>
 </head>
@@ -322,60 +466,43 @@
       <div class="login-hint">Login</div>
 
       <form id="loginForm">
-        <input
-          id="email"
-          type="email"
-          placeholder="Email"
-          autocomplete="username"
-          required
-        >
+        <input id="email" type="email" placeholder="Email"
+          autocomplete="username" required>
 
-        <input
-          id="password"
-          type="password"
-          placeholder="Password"
-          autocomplete="current-password"
-          required
-        >
+        <input id="password" type="password" placeholder="Password"
+          autocomplete="current-password" required>
 
         <button class="primary-btn" id="loginButton" type="submit">
           Login ♡
         </button>
       </form>
 
-<section id="resetPasswordScreen" style="display:none;">
-  <h2>Set a New Password ♡</h2>
-  <div class="login-hint">請輸入你想使用的新密碼</div>
+      <section id="resetPasswordScreen" style="display:none;">
+        <h2>Set a New Password ♡</h2>
+        <div class="login-hint">請輸入你想使用的新密碼</div>
 
-  <form id="resetPasswordForm">
-    <input
-      id="newPassword"
-      type="password"
-      placeholder="New Password（至少 6 個字元）"
-      minlength="6"
-      required
-    >
+        <form id="resetPasswordForm">
+          <input id="newPassword" type="password"
+            placeholder="New Password（至少 6 個字元）"
+            minlength="6" required>
 
-    <input
-      id="confirmPassword"
-      type="password"
-      placeholder="Confirm New Password"
-      minlength="6"
-      required
-    >
+          <input id="confirmPassword" type="password"
+            placeholder="Confirm New Password"
+            minlength="6" required>
 
-    <button class="primary-btn" type="submit" id="resetPasswordButton">
-      Update Password ♡
-    </button>
-  </form>
-</section>
-      
+          <button class="primary-btn" type="submit"
+            id="resetPasswordButton">
+            Update Password ♡
+          </button>
+        </form>
+      </section>
+
       <div id="loginMessage" role="status"></div>
       <div class="login-footer">Only for two of us ♡</div>
     </div>
   </section>
 
-  <!-- 登入成功才會顯示的首頁 -->
+  <!-- 登入後首頁 -->
   <div id="appScreen">
 
     <div class="topbar">
@@ -405,7 +532,7 @@
       </section>
 
       <section class="menu">
-        <a class="item" href="#memories">
+        <a class="item" href="#memoriesSection">
           <span class="emoji">📷</span>
           <strong>Fur Memories</strong>
           <small>毛毛相簿</small>
@@ -429,6 +556,43 @@
           <small>好寶寶集點卡</small>
         </a>
       </section>
+
+      <!-- 相簿 -->
+      <section id="memoriesSection">
+        <div class="section-heading">
+          <h2>📷 Fur Memories</h2>
+          <p>把每一個珍惜的瞬間，留在我們的小宇宙。</p>
+        </div>
+
+        <form class="memory-form" id="memoryForm">
+
+          <label for="memoryPhoto">照片</label>
+          <input id="memoryPhoto" type="file"
+            accept="image/*" required>
+
+          <label for="memoryTitle">回憶標題</label>
+          <input id="memoryTitle" type="text"
+            placeholder="例如：第一次一起看海" maxlength="100">
+
+          <label for="memoryDate">回憶日期</label>
+          <input id="memoryDate" type="date" required>
+
+          <label for="memoryDescription">回憶故事</label>
+          <textarea id="memoryDescription"
+            placeholder="那一天發生了什麼事呢？"></textarea>
+
+          <button class="upload-btn" id="uploadMemoryButton"
+            type="submit">
+            Upload Memory ♡
+          </button>
+
+          <div id="memoryMessage" role="status"></div>
+        </form>
+
+        <div class="memory-grid" id="memoryGrid">
+          <div class="empty-memories">正在載入回憶 ♡</div>
+        </div>
+      </section>
     </main>
 
     <footer>
@@ -437,169 +601,470 @@
     </footer>
   </div>
 
-  <!-- Supabase 登入功能 -->
- 
-<!-- Supabase 登入功能 -->
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <!-- Supabase -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-<script>
-(function () {
-  const SUPABASE_URL = "https://lttnbiwyosxaciggphei.supabase.co";
-  const SUPABASE_KEY = "sb_publishable_kffwFu-4hfWa3_P0uD1law_crdsSZGb";
+  <script>
+  (function () {
+    const SUPABASE_URL = "https://lttnbiwyosxaciggphei.supabase.co";
+    const SUPABASE_KEY = "sb_publishable_kffwFu-4hfWa3_P0uD1law_crdsSZGb";
 
-  const supabaseClient = window.supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_KEY
-  );
+    const supabaseClient = window.supabase.createClient(
+      SUPABASE_URL,
+      SUPABASE_KEY
+    );
 
-  const loginScreen = document.getElementById("loginScreen");
-  const appScreen = document.getElementById("appScreen");
-  const loginForm = document.getElementById("loginForm");
-  const loginButton = document.getElementById("loginButton");
-  const loginMessage = document.getElementById("loginMessage");
+    const loginScreen = document.getElementById("loginScreen");
+    const appScreen = document.getElementById("appScreen");
+    const loginForm = document.getElementById("loginForm");
+    const loginButton = document.getElementById("loginButton");
+    const loginMessage = document.getElementById("loginMessage");
 
-  const resetScreen = document.getElementById("resetPasswordScreen");
-  const resetForm = document.getElementById("resetPasswordForm");
+    const resetScreen = document.getElementById("resetPasswordScreen");
+    const resetForm = document.getElementById("resetPasswordForm");
 
-  let recoveryMode = false;
+    const memoryForm = document.getElementById("memoryForm");
+    const memoryGrid = document.getElementById("memoryGrid");
+    const memoryMessage = document.getElementById("memoryMessage");
+    const uploadMemoryButton = document.getElementById("uploadMemoryButton");
 
-  function showLogin(message = "") {
-    loginScreen.style.display = "flex";
-    appScreen.style.display = "none";
-    resetScreen.style.display = "none";
-    loginForm.style.display = "block";
-    loginMessage.textContent = message;
-  }
+    let recoveryMode = false;
+    let currentUser = null;
+    let currentCoupleId = null;
 
-  function showReset(message = "") {
-    loginScreen.style.display = "flex";
-    appScreen.style.display = "none";
-    loginForm.style.display = "none";
-    resetScreen.style.display = "block";
-    loginMessage.textContent = message;
-  }
-
-  function showHome(email) {
-    loginScreen.style.display = "none";
-    appScreen.style.display = "block";
-    document.getElementById("userEmail").textContent = email || "";
-  }
-
-  async function checkMember(user) {
-    const { data, error } = await supabaseClient
-      .from("couple_members")
-      .select("couple_id, role")
-      .eq("user_id", user.id)
-      .maybeSingle();
-
-    if (error) {
-      console.error("Member check error:", error);
-      showLogin("資料庫錯誤：" + error.message);
-      return;
+    function showLogin(message = "") {
+      loginScreen.style.display = "flex";
+      appScreen.style.display = "none";
+      resetScreen.style.display = "none";
+      loginForm.style.display = "block";
+      loginMessage.textContent = message;
     }
 
-    if (!data) {
-      showLogin("這個帳號尚未加入 Lumos Day 共同空間。");
-      return;
+    function showReset(message = "") {
+      loginScreen.style.display = "flex";
+      appScreen.style.display = "none";
+      loginForm.style.display = "none";
+      resetScreen.style.display = "block";
+      loginMessage.textContent = message;
     }
 
-    showHome(user.email);
-  }
+    function showHome(email) {
+      loginScreen.style.display = "none";
+      appScreen.style.display = "block";
+      document.getElementById("userEmail").textContent = email || "";
+    }
 
-  // 計算交往天數
-  function updateLoveDays() {
-    const startDate = new Date(2025, 11, 21);
-    const today = new Date();
+    async function checkMember(user) {
+      const { data, error } = await supabaseClient
+        .from("couple_members")
+        .select("couple_id, role")
+        .eq("user_id", user.id)
+        .maybeSingle();
 
-    startDate.setHours(0, 0, 0, 0);
-    today.setHours(0, 0, 0, 0);
+      if (error) {
+        console.error("Member check error:", error);
+        showLogin("資料庫錯誤：" + error.message);
+        return false;
+      }
 
-    const days = Math.floor(
-      (today - startDate) / (1000 * 60 * 60 * 24)
-    ) + 1;
+      if (!data) {
+        showLogin("這個帳號尚未加入 Lumos Day 共同空間。");
+        return false;
+      }
 
-    document.getElementById("days").textContent =
-      days >= 1 ? days + " DAYS ♡" : "COMING SOON ♡";
-  }
+      currentUser = user;
+      currentCoupleId = data.couple_id;
 
-  // 正常登入
-  loginForm.addEventListener("submit", async (event) => {
-    event.preventDefault();
+      showHome(user.email);
+      await loadMemories();
 
-    loginButton.disabled = true;
-    loginButton.textContent = "Logging in...";
-    loginMessage.textContent = "";
+      return true;
+    }
 
-    const email = document.getElementById("email").value.trim();
-    const password = document.getElementById("password").value;
+    function updateLoveDays() {
+      const startDate = new Date(2025, 11, 21);
+      const today = new Date();
 
-    try {
-      const { data, error } = await supabaseClient.auth.signInWithPassword({
-        email,
-        password
+      startDate.setHours(0, 0, 0, 0);
+      today.setHours(0, 0, 0, 0);
+
+      const days = Math.floor(
+        (today - startDate) / (1000 * 60 * 60 * 24)
+      ) + 1;
+
+      document.getElementById("days").textContent =
+        days >= 1 ? days + " DAYS ♡" : "COMING SOON ♡";
+    }
+
+    function formatDate(dateString) {
+      const parts = dateString.split("-");
+      return `${parts[0]}/${parts[1]}/${parts[2]}`;
+    }
+
+    // 載入回憶
+    async function loadMemories() {
+      memoryGrid.innerHTML =
+        '<div class="empty-memories">正在載入回憶 ♡</div>';
+
+      const { data, error } = await supabaseClient
+        .from("memories")
+        .select("*")
+        .eq("couple_id", currentCoupleId)
+        .order("memory_date", { ascending: false });
+
+      if (error) {
+        console.error(error);
+        memoryGrid.innerHTML =
+          '<div class="empty-memories">載入失敗：' +
+          escapeHTML(error.message) + '</div>';
+        return;
+      }
+
+      if (!data || data.length === 0) {
+        memoryGrid.innerHTML =
+          '<div class="empty-memories">' +
+          '還沒有任何回憶，讓我們一起創造第一個吧！♡' +
+          '</div>';
+        return;
+      }
+
+      memoryGrid.innerHTML = "";
+
+      for (const memory of data) {
+        const { data: imageData, error: imageError } =
+          await supabaseClient.storage
+            .from("memories")
+            .createSignedUrl(memory.storage_path, 3600);
+
+        if (imageError) {
+          console.error(imageError);
+        }
+
+        const card = document.createElement("article");
+        card.className = "memory-card";
+
+        const image = document.createElement("img");
+        image.alt = memory.title || "Lumos Day memory";
+        image.loading = "lazy";
+
+        if (imageData && imageData.signedUrl) {
+          image.src = imageData.signedUrl;
+        }
+
+        const content = document.createElement("div");
+        content.className = "memory-content";
+
+        const title = document.createElement("div");
+        title.className = "memory-title";
+        title.textContent = memory.title || "Untitled ♡";
+
+        const date = document.createElement("div");
+        date.className = "memory-date";
+        date.textContent = formatDate(memory.memory_date);
+
+        const description = document.createElement("div");
+        description.className = "memory-description";
+        description.textContent = memory.description || "";
+
+        const deleteButton = document.createElement("button");
+        deleteButton.className = "delete-memory-btn";
+        deleteButton.textContent = "Delete Memory";
+
+        deleteButton.addEventListener("click", async () => {
+          const confirmed = confirm(
+            "確定要刪除這段回憶嗎？照片也會一起刪除喔。"
+          );
+
+          if (!confirmed) return;
+
+          deleteButton.disabled = true;
+          deleteButton.textContent = "Deleting...";
+
+          const { error: storageError } = await supabaseClient.storage
+            .from("memories")
+            .remove([memory.storage_path]);
+
+          if (storageError) {
+            deleteButton.disabled = false;
+            deleteButton.textContent = "Delete Memory";
+            alert("照片刪除失敗：" + storageError.message);
+            return;
+          }
+
+          const { error: databaseError } = await supabaseClient
+            .from("memories")
+            .delete()
+            .eq("id", memory.id)
+            .eq("couple_id", currentCoupleId);
+
+          if (databaseError) {
+            deleteButton.disabled = false;
+            deleteButton.textContent = "Delete Memory";
+            alert("資料刪除失敗：" + databaseError.message);
+            return;
+          }
+
+          await loadMemories();
+        });
+
+        content.appendChild(title);
+        content.appendChild(date);
+        content.appendChild(description);
+        content.appendChild(deleteButton);
+
+        card.appendChild(image);
+        card.appendChild(content);
+
+        memoryGrid.appendChild(card);
+      }
+    }
+
+    function escapeHTML(value) {
+      return String(value).replace(/[&<>"']/g, function (character) {
+        const map = {
+          "&": "&amp;",
+          "<": "&lt;",
+          ">": "&gt;",
+          '"': "&quot;",
+          "'": "&#39;"
+        };
+        return map[character];
       });
-
-      if (error) {
-        loginMessage.textContent = "登入失敗：" + error.message;
-        return;
-      }
-
-      await checkMember(data.user);
-
-    } catch (error) {
-      loginMessage.textContent = "連線發生問題，請稍後再試。";
-    } finally {
-      loginButton.disabled = false;
-      loginButton.textContent = "Login ♡";
     }
-  });
 
-  // 登出
-  document.getElementById("logoutButton")
-    .addEventListener("click", async () => {
+    // 上傳回憶
+    memoryForm.addEventListener("submit", async (event) => {
+      event.preventDefault();
 
-      const { error } = await supabaseClient.auth.signOut();
-
-      if (error) {
-        alert("登出失敗，請再試一次。");
+      if (!currentUser || !currentCoupleId) {
+        memoryMessage.textContent = "請先登入。";
         return;
       }
 
-      showLogin();
+      const file = document.getElementById("memoryPhoto").files[0];
+      const title = document.getElementById("memoryTitle").value.trim();
+      const date = document.getElementById("memoryDate").value;
+      const description = document.getElementById("memoryDescription").value.trim();
+
+      if (!file) {
+        memoryMessage.textContent = "請選擇照片。";
+        return;
+      }
+
+      if (!date) {
+        memoryMessage.textContent = "請選擇回憶日期。";
+        return;
+      }
+
+      if (!file.type.startsWith("image/")) {
+        memoryMessage.textContent = "請選擇圖片檔案。";
+        return;
+      }
+
+      uploadMemoryButton.disabled = true;
+      uploadMemoryButton.textContent = "Uploading...";
+      memoryMessage.textContent = "正在保存回憶，請稍候 ♡";
+
+      const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, "_");
+      const storagePath =
+        currentCoupleId + "/" + crypto.randomUUID() + "_" + safeName;
+
+      try {
+        const { error: uploadError } = await supabaseClient.storage
+          .from("memories")
+          .upload(storagePath, file, {
+            contentType: file.type,
+            upsert: false
+          });
+
+        if (uploadError) {
+          memoryMessage.textContent =
+            "照片上傳失敗：" + uploadError.message;
+          return;
+        }
+
+        const { error: insertError } = await supabaseClient
+          .from("memories")
+          .insert({
+            couple_id: currentCoupleId,
+            user_id: currentUser.id,
+            title: title,
+            description: description,
+            memory_date: date,
+            storage_path: storagePath
+          });
+
+        if (insertError) {
+          await supabaseClient.storage
+            .from("memories")
+            .remove([storagePath]);
+
+          memoryMessage.textContent =
+            "回憶保存失敗：" + insertError.message;
+          return;
+        }
+
+        memoryForm.reset();
+        memoryMessage.textContent = "回憶保存成功！♡";
+
+        await loadMemories();
+
+      } catch (error) {
+        memoryMessage.textContent =
+          "發生錯誤：" + error.message;
+      } finally {
+        uploadMemoryButton.disabled = false;
+        uploadMemoryButton.textContent = "Upload Memory ♡";
+      }
     });
 
-  // 初始化
-  async function initialize() {
-    updateLoveDays();
-    showLogin();
+    // 登入
+    loginForm.addEventListener("submit", async (event) => {
+      event.preventDefault();
 
-    const { data, error } = await supabaseClient.auth.getSession();
+      loginButton.disabled = true;
+      loginButton.textContent = "Logging in...";
+      loginMessage.textContent = "";
 
-    if (error) {
-      showLogin("讀取登入狀態失敗，請重新整理。");
-      return;
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value;
+
+      try {
+        const { data, error } = await supabaseClient.auth.signInWithPassword({
+          email,
+          password
+        });
+
+        if (error) {
+          loginMessage.textContent = "登入失敗：" + error.message;
+          return;
+        }
+
+        await checkMember(data.user);
+
+      } catch (error) {
+        loginMessage.textContent = "連線發生問題，請稍後再試。";
+      } finally {
+        loginButton.disabled = false;
+        loginButton.textContent = "Login ♡";
+      }
+    });
+
+    // 密碼重設事件
+    supabaseClient.auth.onAuthStateChange((event, session) => {
+      if (event === "PASSWORD_RECOVERY") {
+        recoveryMode = true;
+        showReset("請設定你的新密碼 ♡");
+      }
+
+      if (event === "SIGNED_OUT") {
+        recoveryMode = false;
+        currentUser = null;
+        currentCoupleId = null;
+        showLogin();
+      }
+    });
+
+    resetForm.addEventListener("submit", async (event) => {
+      event.preventDefault();
+
+      const password = document.getElementById("newPassword").value;
+      const confirmPassword = document.getElementById("confirmPassword").value;
+      const button = document.getElementById("resetPasswordButton");
+
+      if (password.length < 6) {
+        loginMessage.textContent = "密碼至少需要 6 個字元。";
+        return;
+      }
+
+      if (password !== confirmPassword) {
+        loginMessage.textContent = "兩次輸入的密碼不一致。";
+        return;
+      }
+
+      button.disabled = true;
+      button.textContent = "Updating...";
+
+      try {
+        const { data, error } = await supabaseClient.auth.updateUser({
+          password: password
+        });
+
+        if (error) {
+          loginMessage.textContent = "更新失敗：" + error.message;
+          return;
+        }
+
+        recoveryMode = false;
+
+        window.history.replaceState(
+          {},
+          document.title,
+          window.location.pathname
+        );
+
+        loginMessage.textContent = "密碼更新成功！";
+
+        if (data.user) {
+          await checkMember(data.user);
+        } else {
+          showLogin("密碼更新成功！請使用新密碼登入。");
+        }
+
+      } catch (error) {
+        loginMessage.textContent = "發生錯誤，請重新嘗試。";
+      } finally {
+        button.disabled = false;
+        button.textContent = "Update Password ♡";
+      }
+    });
+
+    // 登出
+    document.getElementById("logoutButton")
+      .addEventListener("click", async () => {
+
+        const { error } = await supabaseClient.auth.signOut();
+
+        if (error) {
+          alert("登出失敗，請再試一次。");
+          return;
+        }
+
+        currentUser = null;
+        currentCoupleId = null;
+        showLogin();
+      });
+
+    // 初始化
+    async function initialize() {
+      updateLoveDays();
+      showLogin();
+
+      const { data, error } = await supabaseClient.auth.getSession();
+
+      if (error) {
+        showLogin("讀取登入狀態失敗，請重新整理。");
+        return;
+      }
+
+      if (
+        recoveryMode ||
+        window.location.hash.includes("type=recovery")
+      ) {
+        recoveryMode = true;
+        showReset("請設定你的新密碼 ♡");
+        return;
+      }
+
+      if (data.session) {
+        await checkMember(data.session.user);
+      }
     }
 
-    // 如果是從密碼重設信件回來，不顯示首頁
-    if (
-      recoveryMode ||
-      window.location.hash.includes("type=recovery")
-    ) {
-      recoveryMode = true;
-      showReset("請設定你的新密碼 ♡");
-      return;
-    }
+    initialize();
 
-    if (data.session) {
-      await checkMember(data.session.user);
-    }
-  }
-
-  initialize();
-
-})();
-</script>
-
+  })();
+  </script>
 
 </body>
 </html>

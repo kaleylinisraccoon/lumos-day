@@ -698,7 +698,7 @@
       if (!data || data.length === 0) {
         memoryGrid.innerHTML =
           '<div class="empty-memories">' +
-          '還沒有任何回憶，讓我們一起創造第一個吧！♡' +
+          '還沒上傳任何照片' +
           '</div>';
         return;
       }
@@ -747,7 +747,7 @@
 
         deleteButton.addEventListener("click", async () => {
           const confirmed = confirm(
-            "確定要刪除這段回憶嗎？照片也會一起刪除喔。"
+            "確定刪除照片?。"
           );
 
           if (!confirmed) return;

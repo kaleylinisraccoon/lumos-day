@@ -475,13 +475,13 @@
         <button class="primary-btn" id="loginButton" type="submit">
           Login ♡
         </button>
-      </form>
-      </section>
+       </form>
 
       <div id="loginMessage" role="status"></div>
+      <div class="login-footer">Only for two of us ♡</div>
     </div>
   </section>
-
+  
   <!-- 登入後首頁 -->
   <div id="appScreen">
 
@@ -595,31 +595,18 @@
     const loginButton = document.getElementById("loginButton");
     const loginMessage = document.getElementById("loginMessage");
 
-    const resetScreen = document.getElementById("resetPasswordScreen");
-    const resetForm = document.getElementById("resetPasswordForm");
-
     const memoryForm = document.getElementById("memoryForm");
     const memoryGrid = document.getElementById("memoryGrid");
     const memoryMessage = document.getElementById("memoryMessage");
     const uploadMemoryButton = document.getElementById("uploadMemoryButton");
 
-    let recoveryMode = false;
     let currentUser = null;
     let currentCoupleId = null;
 
     function showLogin(message = "") {
       loginScreen.style.display = "flex";
       appScreen.style.display = "none";
-      resetScreen.style.display = "none";
       loginForm.style.display = "block";
-      loginMessage.textContent = message;
-    }
-
-    function showReset(message = "") {
-      loginScreen.style.display = "flex";
-      appScreen.style.display = "none";
-      loginForm.style.display = "none";
-      resetScreen.style.display = "block";
       loginMessage.textContent = message;
     }
 
@@ -819,7 +806,6 @@
       const file = document.getElementById("memoryPhoto").files[0];
       const title = document.getElementById("memoryTitle").value.trim();
       const date = document.getElementById("memoryDate").value;
-      const description = document.getElementById("memoryDescription").value.trim();
 
       if (!file) {
         memoryMessage.textContent = "請選擇照片。";
@@ -830,6 +816,8 @@
         memoryMessage.textContent = "請選擇回憶日期。";
         return;
       }
+
+      
 
       if (!file.type.startsWith("image/")) {
         memoryMessage.textContent = "請選擇圖片檔案。";
@@ -927,11 +915,6 @@
 
     // 密碼重設事件
     supabaseClient.auth.onAuthStateChange((event, session) => {
-      if (event === "PASSWORD_RECOVERY") {
-        recoveryMode = true;
-        showReset("請設定你的新密碼 ♡");
-      }
-
       if (event === "SIGNED_OUT") {
         recoveryMode = false;
         currentUser = null;
@@ -1021,16 +1004,7 @@
         showLogin("讀取登入狀態失敗，請重新整理。");
         return;
       }
-
-      if (
-        recoveryMode ||
-        window.location.hash.includes("type=recovery")
-      ) {
-        recoveryMode = true;
-        showReset("請設定你的新密碼 ♡");
-        return;
-      }
-
+      
       if (data.session) {
         await checkMember(data.session.user);
       }
